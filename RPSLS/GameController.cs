@@ -76,24 +76,6 @@ namespace RPSLS
             moveDatabase.Add(spock);
         }
 
-        public Move GetComputerMove()
-        {
-            var selectRandomMove = new Random();
-
-            int choice = selectRandomMove.Next(moveDatabase.Count);
-            var move = moveDatabase[choice];
-
-            //This prevents next move being the same as the last.
-            while (move.Name == lastMove.Name)
-            {
-                choice = selectRandomMove.Next(moveDatabase.Count);
-                move = moveDatabase[choice];
-            }
-
-            lastMove = move;
-            return move;
-        }
-
         public void PlayGame()
         {
             currentTurn = 1;
@@ -119,6 +101,24 @@ namespace RPSLS
             EndGame();
 
         }
+        public Move GetComputerMove()
+        {
+            var selectRandomMove = new Random();
+
+            int choice = selectRandomMove.Next(moveDatabase.Count);
+            var move = moveDatabase[choice];
+
+            //This prevents next move being the same as the last.
+            while (move.Name == lastMove.Name)
+            {
+                choice = selectRandomMove.Next(moveDatabase.Count);
+                move = moveDatabase[choice];
+            }
+
+            lastMove = move;
+            return move;
+        }
+
 
         public Move GetPlayerMove()
         {
@@ -167,6 +167,7 @@ namespace RPSLS
                 Console.WriteLine($"Draw! {playerChoice.Name} is the same as {computerChoice.Name}");
                 currentTurn++;
                 Console.WriteLine("");
+                return;
             }
 
             if (playerChoice.WeakTo(computerChoice))
